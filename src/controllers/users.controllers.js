@@ -41,7 +41,13 @@ export const newContract = async (req, res) => {
 
         res.sendStatus(201);
     } catch (err) {
-        console.log(err);
-        res.sendStatus(500);
+        console.log(err.message);
+        if (err.message === "Error: Same user") {
+            res.status(409).send(
+                { message: "Not allowed to make auto contracts" }
+            )
+        } else {
+            res.sendStatus(500);
+        }
     }
 };

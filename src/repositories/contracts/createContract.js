@@ -13,6 +13,11 @@ export default async (
 ) => {
     try {
         const providerId = await getProviderId(serviceId);
+
+        if (providerId === clientId) {
+            throw new Error("Same user");
+        }
+
         const dueDate = calcDueDate(duration);
         await db.query(`
                 INSERT INTO contracts
