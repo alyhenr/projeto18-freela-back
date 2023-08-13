@@ -1,0 +1,27 @@
+{
+  "name": "projeto18-freela-back",
+  "version": "1.0.0",
+  "description": "Back end of the 18th project - The project is named GetSamurais and it simulates a web app where people can create an account and find other people which provides some type of service, as well provide their own services.",
+  "main": "./src/app.js",
+  "type": "module",
+  "scripts": {
+    "start": "node ./src/app.js",
+    "dev": "nodemon ./src/app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "bcrypt": "^5.1.0",
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "joi": "^17.9.2",
+    "jsonwebtoken": "^9.0.1",
+    "nodemon": "^3.0.1",
+    "pg": "^8.11.2",
+    "uuid": "^9.0.0"
+  }
+}
