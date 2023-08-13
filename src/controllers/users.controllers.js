@@ -1,4 +1,6 @@
 import createNewService from "../repositories/catalog/createNewService.js";
+import createContract, { getProviderId } from "../repositories/contracts/createContract.js";
+import sendPrivateMessage from "../repositories/users/sendPrivateMessage.js";
 
 export const newService = async (req, res) => {
     const data = req.body;
@@ -15,7 +17,31 @@ export const newService = async (req, res) => {
     }
 };
 
-export const newContract = (req, res) => {
-    console.log(req.body);
-    res.sendStatus(200);
+export const newContract = async (req, res) => {
+    //We can get the service provider with it
+    const serviceId = req.params.id;
+    //The user requesting the service
+    const clientId = req.userId;
+
+    const {
+        requirements, totalPrice, duration, ...details
+    } = req.body;
+
+    try {
+        await createContract(serviceId, clientId, totalPrice, requirements, duration);
+
+        if (details.message) {
+            const providerId = await getProviderId(serviceId);
+            await sendPrivateMessage(
+                clientId,
+                providerId,
+                details.message
+            );
+        }
+
+        res.sendStatus(201);
+    } catch (err) {
+        console.log(err);
+        res.sendStatus(500);
+    }
 };
