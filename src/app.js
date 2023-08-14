@@ -10,7 +10,7 @@ const app = express();
 
 app.use(cookieParser());
 app.use(cors({
-    credentials: true, origin: 'https://projeto18-freela-front-4rtt.vercel.app/'
+    credentials: true, origin: 'https://projeto18-freela-front-4rtt-mmc9agtfj-alyhenr.vercel.app/'
 }))
 app.use(express.json());
 
