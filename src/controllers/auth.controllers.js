@@ -8,6 +8,7 @@ import loginUser from "../repositories/users/loginUser.js";
 import createSession from "../repositories/sessions/createSession.js";
 import findSession from "../repositories/sessions/findSession.js";
 import { generateAccessToken, generateRefreshToken } from "../services/generateJWT.js";
+import endSession from "../repositories/sessions/endSession.js";
 
 export const signUp = async (req, res) => {
     const userData = req.body;
@@ -36,7 +37,7 @@ export const signIn = async (req, res) => {
             const refreshToken = generateRefreshToken(userId, username);
 
             createSession({
-                userId: user.userId, refreshToken, accessToken
+                userId: user.userId, refreshToken
             });
 
             //Refresh cookie:
@@ -85,5 +86,28 @@ export const refreshToken = async (req, res) => {
         }
     } catch (err) {
         return res.sendStatus(403);
+    }
+};
+
+export const logoutUser = async (req, res) => {
+    const cookies = req.cookies;
+
+    if (!cookies?.jwt) return res.sendStatus(204);
+    const refreshToken = cookies.jwt;
+
+    res.clearCookie('jwt', { httpOnly: true, sameSite: 'None', secure: true });
+
+    try {
+        const session = await findSession(refreshToken);
+
+        if (!session.found) {
+            return res.sendStatus(204);
+        }
+
+        await endSession(refreshToken);
+        res.sendStatus(204);
+    } catch (err) {
+        console.log(err);
+        res.sendStatus(500);
     }
 };

@@ -1,11 +1,12 @@
 import { Router } from "express";
 
-import { newContract, newService } from "../controllers/users.controllers.js";
+import { newContract, newMessage, newService } from "../controllers/users.controllers.js";
 
 import schemaValidation from "../middlewares/schemaValidation.js";
 
 import { newServiceSchema } from "../schemas/catalogSchemas.js";
 import contractSchema from "../schemas/contractSchema.js";
+import messageSchema from "../schemas/messageSchema.js";
 
 //Authenticated routes
 const usersRouter = Router();
@@ -14,5 +15,7 @@ const usersRouter = Router();
 usersRouter.post("/new-service", schemaValidation(newServiceSchema), newService);
 //User contract the service of another user:
 usersRouter.post("/service/:id", schemaValidation(contractSchema), newContract);
+//Private message:
+usersRouter.post("/messages", schemaValidation(messageSchema), newMessage);
 
 export default usersRouter;

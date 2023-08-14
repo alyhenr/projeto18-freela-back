@@ -19,7 +19,7 @@ export const getServices = async (req, res) => {
             response.userContracts = userContracts;
         }
 
-        res.send(response);
+        res.status(200).send(response);
     } catch (err) {
         console.log(err);
         res.sendStatus(500);

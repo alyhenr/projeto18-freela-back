@@ -3,7 +3,7 @@ import { db } from "../../database/database.js";
 export const retrieveAllServices = async () => {
     try {
         const services = (await db.query(`
-            SELECT c.id, username, email,
+            SELECT c.id, u.id as userId, username, email,
             phone, city,
             description,
             price, categories,

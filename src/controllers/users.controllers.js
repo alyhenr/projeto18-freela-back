@@ -1,5 +1,7 @@
 import createNewService from "../repositories/catalog/createNewService.js";
 import createContract, { getProviderId } from "../repositories/contracts/createContract.js";
+import endSession from "../repositories/sessions/endSession.js";
+import findSession from "../repositories/sessions/findSession.js";
 import sendPrivateMessage from "../repositories/users/sendPrivateMessage.js";
 
 export const newService = async (req, res) => {
@@ -49,5 +51,18 @@ export const newContract = async (req, res) => {
         } else {
             res.sendStatus(500);
         }
+    }
+};
+
+export const newMessage = async (req, res) => {
+    const { senderId, receiverId, message } = req.body;
+
+    try {
+        await sendPrivateMessage(senderId, receiverId, message);
+
+        res.sendStatus(201);
+    } catch (err) {
+        console.log(err);
+        res.sendStatus(500);
     }
 };
