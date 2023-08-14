@@ -1,6 +1,6 @@
 import { Router } from "express";
 
-import { newContract, newMessage, newService } from "../controllers/users.controllers.js";
+import { deleteService, getUserData, newContract, newMessage, newService } from "../controllers/users.controllers.js";
 
 import schemaValidation from "../middlewares/schemaValidation.js";
 
@@ -17,5 +17,9 @@ usersRouter.post("/new-service", schemaValidation(newServiceSchema), newService)
 usersRouter.post("/service/:id", schemaValidation(contractSchema), newContract);
 //Private message:
 usersRouter.post("/messages", schemaValidation(messageSchema), newMessage);
+//Dashboard:
+usersRouter.get("/dashboard", getUserData);
+//Service provider deletes service:
+usersRouter.delete("/delete-service/:id", deleteService)
 
 export default usersRouter;

@@ -1,5 +1,5 @@
 import { retrieveAllServices } from "../repositories/catalog/retrieveServices.js";
-import { retrieveAllUsers } from "../repositories/catalog/retrieveUsers.js";
+import { retrieveAllUsers, retrieveUserData } from "../repositories/catalog/retrieveUsers.js";
 import { getUserActiveContracts } from "../repositories/contracts/retrieveContracts.js";
 
 export const getServices = async (req, res) => {
@@ -35,3 +35,14 @@ export const getUsers = async (req, res) => {
         res.sendStatus(500);
     }
 }
+
+export const getUser = async (req, res) => {
+    const { id } = req.params;
+    try {
+        const response = await retrieveUserData(id);
+        res.send(response);
+    } catch (err) {
+        console.log(err);
+        res.sendStatus(500);
+    }
+};
